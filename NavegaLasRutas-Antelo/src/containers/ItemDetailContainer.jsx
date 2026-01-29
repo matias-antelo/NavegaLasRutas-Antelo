@@ -4,40 +4,27 @@ import ItemCount from "../components/ItemCount/ItemCount";
 
 const ItemDetailContainer = () => {
   const [product, setProduct] = useState(null);
-  const [loading, setLoading] = useState(true);
   const { itemId } = useParams();
 
   useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        const response = await fetch(
-          `https://dummyjson.com/products/${itemId}`
-        );
-        const data = await response.json();
-
-        setTimeout(() => {
-          setProduct(data);
-          setLoading(false);
-        }, 500);
-      } catch (error) {
-        console.error("Error fetching product:", error);
-        setLoading(false);
-      }
-    };
-
-    fetchProduct();
+    fetch(`https://dummyjson.com/products/${itemId}`)
+      .then((res) => res.json())
+      .then((data) => setProduct(data))
   }, [itemId]);
 
-  if (loading) return <p>Cargando detalle...</p>;
-  if (!product) return <p>Producto no encontrado</p>;
-
+  if (!product) {
+    return <p>Cargando detalle...</p>;
+  }
   return (
     <div>
       <h2>{product.title}</h2>
-      <img src={product.thumbnail} alt={product.title} width={250} />
+      <img
+        src={product.thumbnail}
+        alt={product.title}
+        width={250}
+      />
       <p>{product.description}</p>
       <p>${product.price}</p>
-
       <ItemCount stock={product.stock} />
     </div>
   );

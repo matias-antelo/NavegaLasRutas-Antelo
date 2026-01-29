@@ -1,19 +1,13 @@
 import Item from "../Item/Item";
+import "./ItemList.css";
 
 const ItemList = ({ products }) => {
-  if (!products.length) {
-    return <p>No hay productos para mostrar</p>;
-  }
-
   return (
-    <div>
+    <div className="items-container">
       {products.map((prod) => (
         <Item
           key={prod.id}
-          id={prod.id}
-          title={prod.title}
-          price={prod.price}
-          thumbnail={prod.thumbnail}
+          prod={prod}
         />
       ))}
     </div>
@@ -21,4 +15,3 @@ const ItemList = ({ products }) => {
 };
 
 export default ItemList;
-

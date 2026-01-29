@@ -1,14 +1,30 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import "./Item.css";
 
-const Item = ({ id, title, price, thumbnail }) => {
+function Item({ prod }) {
+  const navigate = useNavigate();
+
   return (
-    <div>
-      <img src={thumbnail} alt={title} width={150} />
-      <h3>{title}</h3>
-      <p>${price}</p>
-      <Link to={`/item/${id}`}>Ver detalle</Link>
+    <div className="item-card card bg-base-300 w-[90%] shadow-sm mb-8">
+      <figure className="item-image">
+        <img
+          src={prod.thumbnail}
+          alt={prod.title}
+        />
+      </figure>
+      <div className="item-content card-body">
+        <h2 className="item-title card-title">{prod.title}</h2>
+        <p className="item-description">{prod.description}</p>
+        <div className="card-actions justify-end">
+          <button
+            className="item-button btn btn-primary"
+            onClick={() => navigate(`/item/${prod.id}`)}
+          >Ver detalle
+          </button>
+        </div>
+      </div>
     </div>
   );
-};
+}
 
 export default Item;
